@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
+import { HTTP_PROVIDERS } from '@angular/http';
 import { ContactsHeaderComponent } from './contacts-header';
 import { ContactsService } from './contacts.service';
+import 'rxjs/add/operator/map';
 
 @Component({
   moduleId: module.id,
@@ -9,7 +11,7 @@ import { ContactsService } from './contacts.service';
   templateUrl: 'contacts.component.html',
   styleUrls: ['contacts.component.css'],
   directives: [ROUTER_DIRECTIVES, ContactsHeaderComponent],
-  providers: [ContactsService]
+  providers: [HTTP_PROVIDERS, ContactsService]
 })
 export class ContactsAppComponent {
 
