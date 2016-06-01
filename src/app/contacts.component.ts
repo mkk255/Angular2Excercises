@@ -3,7 +3,7 @@ import { ROUTER_DIRECTIVES } from '@angular/router';
 import { HTTP_PROVIDERS } from '@angular/http';
 import { ContactsHeaderComponent } from './contacts-header';
 import { ContactsService } from './contacts.service';
-import { API_ENDPOINT } from './app.tokens';
+import { APP_PROVIDERS } from './app.providers';
 import 'rxjs/add/operator/map';
 
 @Component({
@@ -14,8 +14,7 @@ import 'rxjs/add/operator/map';
   directives: [ROUTER_DIRECTIVES, ContactsHeaderComponent],
   providers: [
     HTTP_PROVIDERS,
-    ContactsService,
-    { provide: API_ENDPOINT, useValue: 'http://localhost:4200/api' }
+    APP_PROVIDERS
   ]
 })
 export class ContactsAppComponent {
