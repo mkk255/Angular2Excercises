@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 import { ContactsHeaderComponent } from './contacts-header';
-import { Contact } from './models/contact';
 import { ContactsService } from './contacts.service';
 
 @Component({
@@ -8,16 +8,11 @@ import { ContactsService } from './contacts.service';
   selector: 'trm-contacts-app',
   templateUrl: 'contacts.component.html',
   styleUrls: ['contacts.component.css'],
-  directives: [ContactsHeaderComponent],
+  directives: [ROUTER_DIRECTIVES, ContactsHeaderComponent],
   providers: [ContactsService]
 })
-export class ContactsAppComponent implements OnInit {
+export class ContactsAppComponent {
 
-  contacts: Array<Contact>;
+  constructor() {}
 
-  constructor(private contactsService: ContactsService) {}
-
-  ngOnInit () {
-    this.contacts = this.contactsService.getContacts();
-  }
 }
