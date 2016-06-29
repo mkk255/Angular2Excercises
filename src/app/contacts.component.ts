@@ -11,7 +11,11 @@ import 'rxjs/add/operator/map';
   templateUrl: 'contacts.component.html',
   styleUrls: ['contacts.component.css'],
   directives: [ROUTER_DIRECTIVES, ContactsHeaderComponent],
-  providers: [HTTP_PROVIDERS, ContactsService]
+  providers: [
+    HTTP_PROVIDERS,
+    ContactsService,
+    { provide: 'API_ENDPOINT', useValue: 'http://localhost:4200/api' }
+  ]
 })
 export class ContactsAppComponent {
 
