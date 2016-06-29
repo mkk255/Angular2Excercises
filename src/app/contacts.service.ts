@@ -29,4 +29,9 @@ export class ContactsService {
   addContact(contact: Contact) {
     return this.http.post(`${this.apiEndpoint}/contacts`, contact);
   }
+
+  isEmailAvailable(email: string) {
+    return this.http.get(`${this.apiEndpoint}/check-email?email=${email}`)
+                    .map(res => res.json());
+  }
 }
