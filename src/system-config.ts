@@ -33,6 +33,7 @@ const barrels: string[] = [
   'app/contacts-header',
   'app/contacts-list',
   'app/contacts-detail',
+  'app/contacts-editor',
   /** @cli-barrel */
 ];
 
