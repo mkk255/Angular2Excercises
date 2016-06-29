@@ -18,6 +18,7 @@ import { ConfirmDeactivationDialogComponent } from './contacts-editor/confirm-de
 import { ContactsCreatorComponent } from './contacts-creator/contacts-creator.component';
 
 import { EmailValidatorDirective } from './email-validator.directive';
+import { EmailAvailabilityValidatorDirective } from './email-availability-validator.directive';
 
 import { ContactsService } from './contacts.service';
 import { EventBusService } from './event-bus.service';
@@ -42,7 +43,8 @@ export function confirmNavigationGuard(component) {
     TabsComponent,
     TabComponent,
     ConfirmDeactivationDialogComponent,
-    EmailValidatorDirective
+    EmailValidatorDirective,
+    EmailAvailabilityValidatorDirective
   ],
   entryComponents: [ConfirmDeactivationDialogComponent],
   imports: [

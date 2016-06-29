@@ -45,4 +45,9 @@ export class ContactsService {
                     .map(res => res.json())
                     .map(data => data.items);
   }
+
+  isEmailAvailable(email: string) {
+    return this.http.get(`${this.apiEndpoint}/check-email?email=${email}`)
+                    .map(res => res.json());
+  }
 }
