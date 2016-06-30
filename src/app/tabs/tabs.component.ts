@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { TabComponent } from './';
+import { Component, ContentChildren, QueryList } from '@angular/core';
+import { TabComponent } from './tab.component';
 
 @Component({
   moduleId: module.id,
@@ -7,24 +7,26 @@ import { TabComponent } from './';
   templateUrl: 'tabs.component.html',
   styleUrls: ['tabs.component.css']
 })
-export class TabsComponent implements OnInit {
+export class TabsComponent {
 
-  private tabs: Array<TabComponent> = [];
+  private _tabs: Array<TabComponent> = [];
 
-  constructor() {}
-
-  ngOnInit() {
-  }
+  @ContentChildren(TabComponent)
+  tabs: QueryList<TabComponent>;
 
   addTab(tab: TabComponent) {
-    if (this.tabs.length === 0) {
+    if (this._tabs.length === 0) {
       this.select(tab);
     }
-    this.tabs.push(tab);
+    this._tabs.push(tab);
   }
 
   select(tab: TabComponent) {
-    this.tabs.forEach(tab => tab.selected = false);
+    this._tabs.forEach(tab => tab.selected = false);
     tab.selected = true;
+  }
+
+  ngAfterContentInit() {
+    this.tabs.toArray().forEach(tab => this.addTab(tab));
   }
 }
