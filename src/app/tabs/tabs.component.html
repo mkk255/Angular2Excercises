@@ -1,0 +1,10 @@
+<ul>
+  <li class="waves-effect waves-light btn"
+      *ngFor="let tab of tabs"
+      [class.disabled]="!tab.selected"
+      (click)="select(tab)">
+    {{tab.title}}
+  </li>
+</ul>
+<ng-content></ng-content>
+
