@@ -13,6 +13,7 @@ export class ContactsEditorComponent implements OnInit {
 
   // we need to initialize since we can't use ?. operator with ngModel
   contact: Contact = <Contact>{ address: {}};
+  warnOnClosing = true;
 
   constructor(private contactsService: ContactsService,
               private eventBusService: EventBusService,
@@ -32,9 +33,10 @@ export class ContactsEditorComponent implements OnInit {
     this.goToDetails(contact);
   }
 
-  save(contact: Contact) {
-   this.contactsService.updateContact(contact)
-                       .subscribe(() => this.goToDetails(contact));
+  save (contact: Contact) {
+    this.warnOnClosing = false;
+    this.contactsService.updateContact(contact)
+                        .subscribe(() => this.goToDetails(contact));
   }
 
   private goToDetails(contact: Contact) {
