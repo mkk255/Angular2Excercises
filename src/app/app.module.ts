@@ -12,6 +12,8 @@ import { ContactsService } from './contacts.service';
 import { ContactsAppRoutes } from './app.routes';
 import { API_ENDPOINT } from './app.tokens';
 import { APP_PROVIDERS } from './app.providers';
+import { TabsComponent } from './tabs/tabs/tabs.component';
+import { TabComponent } from './tabs/tab/tab.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { APP_PROVIDERS } from './app.providers';
     ContactsHeaderComponent,
     ContactsListComponent,
     ContactsDetailComponent,
-    ContactsEditorComponent
+    ContactsEditorComponent,
+    TabsComponent,
+    TabComponent
   ],
   imports: [
     BrowserModule,
