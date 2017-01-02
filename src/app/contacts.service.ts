@@ -30,6 +30,10 @@ export class ContactsService {
     return this.http.put(`${this.apiEndpoint}/contacts/${contact.id}`, contact);
   }
 
+  addContact(contact: Contact) {
+    return this.http.post(`${this.apiEndpoint}/contacts`, contact);
+  }
+
   search(term: Observable<string>, debounceMs = 400) {
     return term.debounceTime(debounceMs)
                 .distinctUntilChanged()

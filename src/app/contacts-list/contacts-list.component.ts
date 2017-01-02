@@ -22,7 +22,12 @@ export class ContactsListComponent implements OnInit {
   ngOnInit () {
     this.contacts = this.contactsService.search(this.terms$)
                                         .merge(this.contactsService.getContacts());
+
     this.eventBusService.emit('appTitleChange', 'Contacts');
+
+    this.eventBusService.observe('contactAdded').subscribe(() => {
+      this.contacts = this.contacts.merge(this.contactsService.getContacts());
+    });
   }
 
   trackByContactId(index, contact) {
