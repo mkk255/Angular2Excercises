@@ -4,14 +4,7 @@ import { ContactsService } from '../contacts.service';
 
 @Component({
   selector: 'trm-contacts-list',
-  template: `
-    <md-list>
-      <md-list-item *ngFor="let contact of contacts; trackBy:trackByContactId">
-        <img md-list-avatar [src]="contact.image" alt="Picture of {{contact.name}}" class="circle">
-        <h3 md-line>{{contact.name}}</h3>
-      </md-list-item>
-    </md-list>
-  `,
+  templateUrl: './contacts-list.component.html',
   styleUrls: ['./contacts-list.component.css']
 })
 export class ContactsListComponent implements OnInit {
