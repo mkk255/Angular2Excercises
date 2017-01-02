@@ -7,13 +7,18 @@ import { RouterModule } from '@angular/router';
 
 import { ContactsAppComponent } from './app.component';
 import { ContactsListComponent } from './contacts-list/contacts-list.component';
+import { ContactsDetailComponent } from './contacts-detail/contacts-detail.component';
 
 import { ContactsService } from './contacts.service';
 
 import { APP_ROUTES } from './app.routes';
 
 @NgModule({
-  declarations: [ContactsAppComponent, ContactsListComponent],
+  declarations: [
+    ContactsAppComponent,
+    ContactsListComponent,
+    ContactsDetailComponent
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
