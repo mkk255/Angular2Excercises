@@ -1,6 +1,6 @@
 <md-toolbar>
   <md-input-container dividerColor="accent" class="trm-search-container">
-    <input mdInput (input)="search($event.target.value)" type="text">
+    <input mdInput (input)="terms$.next($event.target.value)" type="text">
   </md-input-container>
   <md-icon color="accent">search</md-icon>
 </md-toolbar>
