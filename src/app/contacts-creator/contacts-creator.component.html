@@ -15,8 +15,11 @@
               <ng-template [ngIf]="name.errors?.minlength">A name must have at least {{name.errors.minlength.requiredLength}} characters</ng-template>
             </md-hint>
           </md-input-container>
-          <md-input-container fxFlex>
-            <input mdInput placeholder="Email" name="email" ngModel>
+          <md-input-container fxFlex [dividerColor]="email.errors ? 'warn' : 'primary'">
+            <input mdInput placeholder="Email" name="email" #email="ngModel" ngModel trmValidateEmail>
+            <md-hint align="end" *ngIf="!email.valid && !email.pristine">
+              <ng-template [ngIf]="email.errors?.validateEmail">Please enter a valid email address</ng-template>
+            </md-hint>
           </md-input-container>
           <md-input-container fxFlex>
             <input mdInput placeholder="Birthday" name="birthday" ngModel type="date">
