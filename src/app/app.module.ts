@@ -28,7 +28,10 @@ import { APP_ROUTES } from './app.routes';
     RouterModule.forRoot(APP_ROUTES),
     HttpModule
   ],
-  providers: [ContactsService],
+  providers: [
+    ContactsService,
+    { provide: 'API_ENDPOINT', useValue: 'http://localhost:4201/api' }
+  ],
   bootstrap: [ContactsAppComponent]
 })
 export class ContactsModule {
