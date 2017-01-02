@@ -1,3 +1,9 @@
+<md-toolbar>
+  <md-input-container dividerColor="accent" class="trm-search-container">
+    <input md-input (input)="search($event.target.value)" type="text">
+  </md-input-container>
+  <md-icon color="accent">search</md-icon>
+</md-toolbar>
 <md-list>
   <a md-list-item
     [routerLink]="['/contact', contact.id]"
