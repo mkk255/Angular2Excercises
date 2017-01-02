@@ -1,6 +1,6 @@
-<div class="trm-contacts-detail">
+<div class="trm-contacts-editor">
   <md-card>
-    <md-card-title-group class="fullBleed">
+    <md-card-title-group class="fullBleed editing">
       <img md-card-md-image [src]="contact?.image || ''">
       <md-card-title>{{contact?.name}}</md-card-title>
       <md-card-subtitle>{{contact?.email || 'No email address'}}</md-card-subtitle>
@@ -8,37 +8,37 @@
     <md-card-content>
       <div fxLayout="column">
         <md-input-container fxFlex>
-          <input mdInput placeholder="Name" name="name" [value]="contact?.name" readonly>
+          <input mdInput placeholder="Name" name="name" [(ngModel)]="contact.name">
         </md-input-container>
         <md-input-container fxFlex>
-          <input mdInput placeholder="Email" name="email" [value]="contact?.email" readonly>
+          <input mdInput placeholder="Email" name="email" [(ngModel)]="contact.email">
         </md-input-container>
         <md-input-container fxFlex>
-          <input mdInput placeholder="Phone" name="phone" [value]="contact?.phone" readonly>
+          <input mdInput placeholder="Phone" name="phone" [(ngModel)]="contact.phone">
         </md-input-container>
         <md-input-container fxFlex>
-          <input mdInput placeholder="Website" name="website" [value]="contact?.website" readonly>
+          <input mdInput placeholder="Website" name="website" [(ngModel)]="contact.website">
         </md-input-container>
         <md-input-container fxFlex>
-          <input mdInput placeholder="Birthday" name="birthday" type="date" [value]="contact?.birthday" readonly>
+          <input mdInput placeholder="Birthday" name="birthday" [(ngModel)]="contact.birthday" type="date">
         </md-input-container>
         <fieldset fxLayout="column">
           <legend>Address</legend>
           <md-input-container fxFlex>
-            <input mdInput placeholder="Street" name="street" [value]="contact?.address.street" readonly>
+            <input mdInput placeholder="Street" name="street" [(ngModel)]="contact.address.street">
           </md-input-container>
           <md-input-container fxFlex>
-            <input mdInput placeholder="Zip" name="zip" [value]="contact?.address.zip" readonly>
+            <input mdInput placeholder="Zip" name="zip" [(ngModel)]="contact.address.zip">
           </md-input-container>
           <md-input-container fxFlex>
-            <input mdInput placeholder="City" name="city" [value]="contact?.address.city" readonly>
+            <input mdInput placeholder="City" name="city" [(ngModel)]="contact.address.city">
           </md-input-container>
         </fieldset>
       </div>
     </md-card-content>
     <md-card-actions fxLayout fxLayoutAlign="center center">
-      <a md-button [routerLink]="['edit']" title="Edit {{contact?.name}}">Edit</a>
-      <a md-button routerLink="/" title="Go back to list">Go Back</a>
+      <button md-button (click)="save(contact)" title="Save contact">Save</button>
+      <button md-button (click)="cancel(contact)" title="Cancel editing">Cancel</button>
     </md-card-actions>
   </md-card>
 </div>

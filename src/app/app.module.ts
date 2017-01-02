@@ -4,10 +4,12 @@ import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms';
 
 import { ContactsAppComponent } from './contacts.component';
 import { ContactsListComponent } from './contacts-list/contacts-list.component';
 import { ContactsDetailComponent } from './contacts-detail/contacts-detail.component';
+import { ContactsEditorComponent } from './contacts-editor/contacts-editor.component';
 
 import { ContactsService } from './contacts.service';
 
@@ -18,14 +20,16 @@ import { API_ENDPOINT } from './app.tokens';
   declarations: [
     ContactsAppComponent,
     ContactsListComponent,
-    ContactsDetailComponent
+    ContactsDetailComponent,
+    ContactsEditorComponent
   ],
   imports: [
     BrowserModule,
     MaterialModule,
     FlexLayoutModule,
     RouterModule.forRoot(APP_ROUTES),
-    HttpModule
+    HttpModule,
+    FormsModule
   ],
   providers: [
     ContactsService,
