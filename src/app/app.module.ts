@@ -17,6 +17,8 @@ import { CanDeactivateContactsEditorGuard } from './contacts-editor/can-deactiva
 import { ConfirmDeactivationDialogComponent } from './contacts-editor/confirm-deactivation-dialog.component';
 import { ContactsCreatorComponent } from './contacts-creator/contacts-creator.component';
 
+import { EmailValidatorDirective } from './email-validator.directive';
+
 import { ContactsService } from './contacts.service';
 import { EventBusService } from './event-bus.service';
 import { ContactResolver } from './shared/contact.resolver';
@@ -35,11 +37,12 @@ export function confirmNavigationGuard(component) {
     ContactsDetailViewComponent,
     ContactsDetailComponent,
     ContactsEditorComponent,
+    ContactsCreatorComponent,
+    ContactsDashboardComponent,
     TabsComponent,
     TabComponent,
-    ContactsDashboardComponent,
     ConfirmDeactivationDialogComponent,
-    ContactsCreatorComponent
+    EmailValidatorDirective
   ],
   entryComponents: [ConfirmDeactivationDialogComponent],
   imports: [
