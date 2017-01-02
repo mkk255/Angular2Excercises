@@ -1,53 +1,59 @@
 <div class="trm-contacts-editor">
-  <md-card>
-    <md-card-title-group class="fullBleed editing">
-      <img md-card-md-image [src]="contact?.image || ''">
-      <md-card-title>{{contact?.name}}</md-card-title>
-      <md-card-subtitle>{{contact?.email || 'No email address'}}</md-card-subtitle>
-    </md-card-title-group>
-    <md-card-content>
-      <div fxLayout="column">
-        <md-input-container fxFlex>
-          <input mdInput placeholder="Name" name="name" [(ngModel)]="contact.name">
-        </md-input-container>
-        <md-input-container fxFlex>
-          <input mdInput placeholder="Email" name="email" [(ngModel)]="contact.email">
-        </md-input-container>
-        <md-input-container fxFlex>
-          <input mdInput placeholder="Phone" name="phone" [(ngModel)]="contact.phone">
-        </md-input-container>
-        <md-input-container fxFlex>
-          <input mdInput placeholder="Website" name="website" [(ngModel)]="contact.website">
-        </md-input-container>
-        <md-input-container fxFlex>
-          <input mdInput placeholder="Birthday" name="birthday" [(ngModel)]="contact.birthday" type="date">
-        </md-input-container>
-        <label class="gender-label">Gender:</label>
-        <md-radio-group name="gender" [(ngModel)]="contact.gender">
-          <md-radio-button *ngFor="let variant of gender" [value]="variant">
-            {{variant}}
-          </md-radio-button>
-        </md-radio-group>
-        <fieldset fxLayout="column">
-          <legend>Address</legend>
-          <md-input-container fxFlex>
-            <input mdInput placeholder="Street" name="street" [(ngModel)]="contact.address.street">
+  <form #form="ngForm" (ngSubmit)="save(contact)">
+    <md-card>
+      <md-card-title-group class="fullBleed editing">
+        <img md-card-md-image [src]="contact?.image || ''">
+        <md-card-title>{{contact?.name}}</md-card-title>
+        <md-card-subtitle>{{contact?.email || 'No email address'}}</md-card-subtitle>
+      </md-card-title-group>
+      <md-card-content>
+        <div fxLayout="column">
+          <md-input-container fxFlex [dividerColor]="name.errors ? 'warn' : 'primary'">
+            <input mdInput placeholder="Name" name="name" #name="ngModel" [(ngModel)]="contact.name" required minlength="3">
+            <md-hint align="end" *ngIf="!name.valid && !name.pristine">
+              <ng-template [ngIf]="name.errors?.required">This field is required</ng-template>
+              <ng-template [ngIf]="name.errors?.minlength">A name must have at least {{name.errors.minlength.requiredLength}} characters</ng-template>
+            </md-hint>
           </md-input-container>
           <md-input-container fxFlex>
-            <input mdInput placeholder="Zip" name="zip" [(ngModel)]="contact.address.zip">
+            <input mdInput placeholder="Email" name="email" [(ngModel)]="contact.email">
           </md-input-container>
           <md-input-container fxFlex>
-            <input mdInput placeholder="City" name="city" [(ngModel)]="contact.address.city">
+            <input mdInput placeholder="Birthday" name="birthday" [(ngModel)]="contact.birthday" type="date">
           </md-input-container>
-          <md-select placeholder="Country" name="country" [(ngModel)]="contact.address.country">
-            <md-option *ngFor="let country of countries" [value]="country.name">{{ country.name }}</md-option>
-          </md-select>
-        </fieldset>
-      </div>
-    </md-card-content>
-    <md-card-actions fxLayout fxLayoutAlign="center center">
-      <button md-button (click)="save(contact)" title="Save contact">Save</button>
-      <button md-button (click)="cancel(contact)" title="Cancel editing">Cancel</button>
-    </md-card-actions>
-  </md-card>
+          <md-input-container fxFlex>
+            <input mdInput placeholder="Phone" name="phone" [(ngModel)]="contact.phone">
+          </md-input-container>
+          <md-input-container fxFlex>
+            <input mdInput placeholder="Website" name="website" [(ngModel)]="contact.website">
+          </md-input-container>
+          <label class="gender-label">Gender:</label>
+          <md-radio-group name="gender" [(ngModel)]="contact.gender">
+            <md-radio-button *ngFor="let variant of gender" [value]="variant">
+              {{variant}}
+            </md-radio-button>
+          </md-radio-group>
+          <fieldset fxLayout="column">
+            <legend>Address</legend>
+            <md-input-container fxFlex>
+              <input mdInput placeholder="Street" name="street" [(ngModel)]="contact.address.street">
+            </md-input-container>
+            <md-input-container fxFlex>
+              <input mdInput placeholder="Zip" name="zip" [(ngModel)]="contact.address.zip">
+            </md-input-container>
+            <md-input-container fxFlex>
+              <input mdInput placeholder="City" name="city" [(ngModel)]="contact.address.city">
+            </md-input-container>
+            <md-select placeholder="Country" name="country" [(ngModel)]="contact.address.country">
+              <md-option *ngFor="let country of countries" [value]="country.name">{{ country.name }}</md-option>
+            </md-select>
+          </fieldset>
+        </div>
+      </md-card-content>
+      <md-card-actions fxLayout fxLayoutAlign="center center">
+        <button md-button type="submit" title="Save contact">Save</button>
+        <button md-button type="button" (click)="cancel(contact)" title="Cancel editing">Cancel</button>
+      </md-card-actions>
+    </md-card>
+  </form>
 </div>
