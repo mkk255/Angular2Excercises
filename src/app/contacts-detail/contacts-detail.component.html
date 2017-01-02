@@ -1,0 +1,43 @@
+<div class="trm-contacts-detail">
+  <md-card>
+    <md-card-title-group class="fullBleed">
+      <img md-card-md-image [src]="contact.image">
+      <md-card-title>{{contact.name}}</md-card-title>
+      <md-card-subtitle>{{contact.email || 'No email address'}}</md-card-subtitle>
+    </md-card-title-group>
+    <md-card-content>
+      <div fxLayout="column">
+        <md-input-container fxFlex>
+          <input mdInput placeholder="Name" name="name" [value]="contact.name" readonly>
+        </md-input-container>
+        <md-input-container fxFlex>
+          <input mdInput placeholder="Email" name="email" [value]="contact.email" readonly>
+        </md-input-container>
+        <md-input-container fxFlex>
+          <input mdInput placeholder="Phone" name="phone" [value]="contact.phone" readonly>
+        </md-input-container>
+        <md-input-container fxFlex>
+          <input mdInput placeholder="Website" name="website" [value]="contact.website" readonly>
+        </md-input-container>
+        <md-input-container fxFlex>
+          <input mdInput placeholder="Birthday" name="birthday" type="date" [value]="contact.birthday" readonly>
+        </md-input-container>
+        <fieldset fxLayout="column">
+          <legend>Address</legend>
+          <md-input-container fxFlex>
+            <input mdInput placeholder="Street" name="street" [value]="contact.address.street" readonly>
+          </md-input-container>
+          <md-input-container fxFlex>
+            <input mdInput placeholder="Zip" name="zip" [value]="contact.address.zip" readonly>
+          </md-input-container>
+          <md-input-container fxFlex>
+            <input mdInput placeholder="City" name="city" [value]="contact.address.city" readonly>
+          </md-input-container>
+        </fieldset>
+      </div>
+    </md-card-content>
+    <md-card-actions fxLayout fxLayoutAlign="center center">
+      <a md-button routerLink="/" title="Go back to list">Go Back</a>
+    </md-card-actions>
+  </md-card>
+</div>
