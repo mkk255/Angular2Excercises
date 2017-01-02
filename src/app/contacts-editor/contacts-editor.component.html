@@ -22,6 +22,12 @@
         <md-input-container fxFlex>
           <input mdInput placeholder="Birthday" name="birthday" [(ngModel)]="contact.birthday" type="date">
         </md-input-container>
+        <label class="gender-label">Gender:</label>
+        <md-radio-group name="gender" [(ngModel)]="contact.gender">
+          <md-radio-button *ngFor="let variant of gender" [value]="variant">
+            {{variant}}
+          </md-radio-button>
+        </md-radio-group>
         <fieldset fxLayout="column">
           <legend>Address</legend>
           <md-input-container fxFlex>
@@ -33,6 +39,9 @@
           <md-input-container fxFlex>
             <input mdInput placeholder="City" name="city" [(ngModel)]="contact.address.city">
           </md-input-container>
+          <md-select placeholder="Country" name="country" [(ngModel)]="contact.address.country">
+            <md-option *ngFor="let country of countries" [value]="country.name">{{ country.name }}</md-option>
+          </md-select>
         </fieldset>
       </div>
     </md-card-content>
