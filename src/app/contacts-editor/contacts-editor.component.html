@@ -1,53 +1,54 @@
 <div class="trm-contacts-editor">
-  <form #form="ngForm" (ngSubmit)="save(contact)">
+  <form [formGroup]="form" (ngSubmit)="save(form.value)">
     <md-card>
       <md-card-title-group class="fullBleed editing">
         <img md-card-md-image [src]="contact?.image || ''">
-        <md-card-title>{{contact?.name}}</md-card-title>
-        <md-card-subtitle>{{contact?.email || 'No email address'}}</md-card-subtitle>
+        <md-card-title>{{form.get('name').value}}</md-card-title>
+        <md-card-subtitle>{{form.get('email').value || 'No email address'}}</md-card-subtitle>
       </md-card-title-group>
       <md-card-content>
         <div fxLayout="column">
-          <md-input-container fxFlex [dividerColor]="name.errors ? 'warn' : 'primary'">
-            <input mdInput placeholder="Name" name="name" #name="ngModel" [(ngModel)]="contact.name" required minlength="3">
-            <md-hint align="end" *ngIf="!name.valid && !name.pristine">
-              <ng-template [ngIf]="name.errors?.required">This field is required</ng-template>
-              <ng-template [ngIf]="name.errors?.minlength">A name must have at least {{name.errors.minlength.requiredLength}} characters</ng-template>
+          <md-input-container fxFlex [dividerColor]="form.get('name').errors ? 'warn' : 'primary'">
+            <input mdInput placeholder="Name" formControlName="name">
+            <md-hint align="end" *ngIf="!form.get('name').valid && !form.get('name').pristine">
+              <ng-template [ngIf]="form.get('name').hasError('required')">This field is required</ng-template>
+              <ng-template [ngIf]="form.get('name').hasError('minlength')">A name must have at least {{form.get('name').errors.minlength.requiredLength}} characters</ng-template>
             </md-hint>
           </md-input-container>
-          <md-input-container fxFlex [dividerColor]="email.errors ? 'warn' : 'primary'">
-            <input mdInput placeholder="Email" name="email" #email="ngModel" [(ngModel)]="contact.email" trmValidateEmail>
-            <md-hint align="end" *ngIf="!email.valid && !email.pristine && !email.untouched">
-              <ng-template [ngIf]="email.errors?.validateEmail">Please enter a valid email address</ng-template>
+          <md-input-container fxFlex [dividerColor]="form.get('email').errors ? 'warn' : 'primary'">
+            <input mdInput placeholder="Email" formControlName="email">
+            <md-hint align="end" *ngIf="!form.get('email').valid && !form.get('email').pristine">
+              <ng-template [ngIf]="form.get('email').hasError('validateEmail')">Please enter a valid email address</ng-template>
+              <ng-template [ngIf]="form.get('email').hasError('emailTaken')">This email address is already taken</ng-template>
             </md-hint>
           </md-input-container>
           <md-input-container fxFlex>
-            <input mdInput placeholder="Birthday" name="birthday" [(ngModel)]="contact.birthday" type="date">
+            <input mdInput placeholder="Birthday" formControlName="birthday" type="date">
           </md-input-container>
           <md-input-container fxFlex>
-            <input mdInput placeholder="Phone" name="phone" [(ngModel)]="contact.phone">
+            <input mdInput placeholder="Phone" formControlName="phone">
           </md-input-container>
           <md-input-container fxFlex>
-            <input mdInput placeholder="Website" name="website" [(ngModel)]="contact.website">
+            <input mdInput placeholder="Website" formControlName="website">
           </md-input-container>
           <label class="gender-label">Gender:</label>
-          <md-radio-group name="gender" [(ngModel)]="contact.gender">
+          <md-radio-group name="gender" formControlName="gender">
             <md-radio-button *ngFor="let variant of gender" [value]="variant">
               {{variant}}
             </md-radio-button>
           </md-radio-group>
-          <fieldset fxLayout="column">
+          <fieldset fxLayout="column" formGroupName="address">
             <legend>Address</legend>
             <md-input-container fxFlex>
-              <input mdInput placeholder="Street" name="street" [(ngModel)]="contact.address.street">
+              <input mdInput placeholder="Street" formControlName="street">
             </md-input-container>
             <md-input-container fxFlex>
-              <input mdInput placeholder="Zip" name="zip" [(ngModel)]="contact.address.zip">
+              <input mdInput placeholder="Zip" formControlName="zip">
             </md-input-container>
             <md-input-container fxFlex>
-              <input mdInput placeholder="City" name="city" [(ngModel)]="contact.address.city">
+              <input mdInput placeholder="City" formControlName="city">
             </md-input-container>
-            <md-select placeholder="Country" name="country" [(ngModel)]="contact.address.country">
+            <md-select placeholder="Country" formControlName="country">
               <md-option *ngFor="let country of countries" [value]="country.name">{{ country.name }}</md-option>
             </md-select>
           </fieldset>
