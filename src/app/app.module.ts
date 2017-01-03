@@ -4,7 +4,7 @@ import { MaterialModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { ContactsAppComponent } from './contacts.component';
 import { ContactsListComponent } from './contacts-list/contacts-list.component';
@@ -53,7 +53,8 @@ export function confirmNavigationGuard(component) {
     RouterModule.forRoot(APP_ROUTES),
     FlexLayoutModule.forRoot(),
     HttpModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     ContactsService,
