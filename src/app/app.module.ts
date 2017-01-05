@@ -17,6 +17,7 @@ import { CanDeactivateContactsEditorGuard } from './contacts-editor/can-deactiva
 import { ConfirmDeactivationDialogComponent } from './contacts-editor/confirm-deactivation-dialog.component';
 
 import { ContactsService } from './contacts.service';
+import { ContactResolver } from './shared/contact.resolver';
 
 import { APP_ROUTES } from './app.routes';
 import { API_ENDPOINT } from './app.tokens';
@@ -49,7 +50,8 @@ export function confirmNavigationGuard(component) {
     ContactsService,
     { provide: API_ENDPOINT, useValue: 'http://localhost:4201/api' },
     { provide: 'ConfirmNavigationGuard', useValue: confirmNavigationGuard },
-    CanDeactivateContactsEditorGuard
+    CanDeactivateContactsEditorGuard,
+    ContactResolver
   ],
   bootstrap: [ContactsAppComponent]
 })
