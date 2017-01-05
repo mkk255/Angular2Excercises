@@ -13,6 +13,8 @@ import { ContactsDetailComponent } from './contacts-detail/contacts-detail.compo
 import { ContactsEditorComponent } from './contacts-editor/contacts-editor.component';
 import { ContactsDashboardComponent } from './contacts-dashboard/contacts-dashboard.component';
 import { AboutComponent } from './about/about.component';
+import { CanDeactivateContactsEditorGuard } from './contacts-editor/can-deactivate-contacts-editor.guard';
+import { ConfirmDeactivationDialogComponent } from './contacts-editor/confirm-deactivation-dialog.component';
 
 import { ContactsService } from './contacts.service';
 
@@ -30,8 +32,10 @@ export function confirmNavigationGuard(component) {
     ContactsDetailComponent,
     ContactsEditorComponent,
     ContactsDashboardComponent,
-    AboutComponent
+    AboutComponent,
+    ConfirmDeactivationDialogComponent
   ],
+  entryComponents: [ConfirmDeactivationDialogComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -44,7 +48,8 @@ export function confirmNavigationGuard(component) {
   providers: [
     ContactsService,
     { provide: API_ENDPOINT, useValue: 'http://localhost:4201/api' },
-    { provide: 'ConfirmNavigationGuard', useValue: confirmNavigationGuard }
+    { provide: 'ConfirmNavigationGuard', useValue: confirmNavigationGuard },
+    CanDeactivateContactsEditorGuard
   ],
   bootstrap: [ContactsAppComponent]
 })
