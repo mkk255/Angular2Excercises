@@ -11,8 +11,7 @@ import { EventBusService } from '../event-bus.service';
 })
 export class ContactsEditorComponent implements OnInit {
 
-  // we need to initialize since we can't use ?. operator with ngModel
-  contact: Contact = <Contact>{ address: {}};
+  contact: Contact;
   warnOnClosing = true;
 
   constructor(private contactsService: ContactsService,
@@ -21,8 +20,8 @@ export class ContactsEditorComponent implements OnInit {
               private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.contactsService
-        .getContact(this.route.snapshot.params['id'])
+    this.route.data
+        .map(data => data['contact'])
         .subscribe(contact => {
           this.contact = contact;
           this.eventBusService.emit('appTitleChange', `Editing: ${contact.name}`);
