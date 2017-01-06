@@ -12,7 +12,6 @@ import { ContactsListComponent } from './contacts-list/contacts-list.component';
 import { ContactsDetailComponent } from './contacts-detail/contacts-detail.component';
 import { ContactsEditorComponent } from './contacts-editor/contacts-editor.component';
 import { ContactsDashboardComponent } from './contacts-dashboard/contacts-dashboard.component';
-import { AboutComponent } from './about/about.component';
 import { CanDeactivateContactsEditorGuard } from './contacts-editor/can-deactivate-contacts-editor.guard';
 import { ConfirmDeactivationDialogComponent } from './contacts-editor/confirm-deactivation-dialog.component';
 
@@ -33,7 +32,6 @@ export function confirmNavigationGuard(component) {
     ContactsDetailComponent,
     ContactsEditorComponent,
     ContactsDashboardComponent,
-    AboutComponent,
     ConfirmDeactivationDialogComponent
   ],
   entryComponents: [ConfirmDeactivationDialogComponent],
