@@ -7,7 +7,7 @@ import { CONTACT_DATA } from './data/contact-data';
   template: `
     <md-toolbar color="primary">Contacts</md-toolbar>
     <md-list>
-      <md-list-item *ngFor="let contact of contacts">
+      <md-list-item *ngFor="let contact of contacts; trackBy:trackByContactId">
         <img md-list-avatar [src]="contact.image" alt="Picture of {{contact.name}}" class="circle">
         <h3 md-line>{{contact.name}}</h3>
       </md-list-item>
@@ -17,4 +17,8 @@ import { CONTACT_DATA } from './data/contact-data';
 })
 export class ContactsAppComponent {
   contacts: Array<Contact> = CONTACT_DATA;
+
+  trackByContactId(index, contact) {
+    return contact.id;
+  }
 }
