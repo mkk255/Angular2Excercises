@@ -1,6 +1,7 @@
 <md-list>
   <a md-list-item
     [routerLink]="['/contact', contact.id]"
+    routerLinkActive="active"
     *ngFor="let contact of contacts | async; trackBy:trackByContactId"
     title="View {{contact.name}} details">
 

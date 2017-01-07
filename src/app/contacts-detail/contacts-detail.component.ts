@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ContactsService } from '../contacts.service';
 import { Contact } from '../models/contact';
 
+import 'rxjs/add/operator/switchMap';
+
 @Component({
   selector: 'trm-contacts-detail',
   templateUrl: './contacts-detail.component.html',
@@ -15,7 +17,9 @@ export class ContactsDetailComponent implements OnInit {
   constructor(private contactsService: ContactsService, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.contactsService.getContact(this.route.snapshot.paramMap.get('id'))
-                        .subscribe(contact => this.contact = contact);
-  }
+    // We need to subscribe to params changes because this component is
+    // reused when jumping between contacts. Hence ngOnInit isn't called
+    this.route.paramMap
+        .switchMap(paramMap => this.contactsService.getContact(paramMap.get('id')))
+        .subscribe(contact => this.contact = contact);  }
 }
