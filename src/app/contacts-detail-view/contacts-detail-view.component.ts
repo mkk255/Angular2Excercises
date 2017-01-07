@@ -4,6 +4,8 @@ import { ContactsService } from '../contacts.service';
 import { Contact } from '../models/contact';
 import { EventBusService } from '../event-bus.service';
 
+import 'rxjs/add/operator/switchMap';
+
 @Component({
   selector: 'trm-contacts-detail-view',
   template: `
@@ -24,10 +26,12 @@ export class ContactsDetailViewComponent implements OnInit {
                 private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.contactsService
-        .getContact(this.route.snapshot.params['id'])
+    // We need to subscribe to params changes because this component is
+    // reused when jumping between contacts. Hence ngOnInit isn't called
+    this.route.params
+        .switchMap(params => this.contactsService.getContact(params['id']))
         .subscribe(contact => {
-          this.contact = contact;
+          this.contact = contact
           this.eventBusService.emit('appTitleChange', contact.name);
         });
   }
