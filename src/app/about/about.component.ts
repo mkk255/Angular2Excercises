@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { EventBusService } from '../event-bus.service';
 
 @Component({
   selector: 'trm-about',
@@ -18,4 +19,11 @@ import { Component } from '@angular/core';
   `,
   styleUrls: ['./about.component.css']
 })
-export class AboutComponent {}
+export class AboutComponent {
+
+  constructor(private eventBusService: EventBusService) {}
+
+  ngOnInit() {
+    this.eventBusService.emit('appTitleChange', 'About');
+  }
+}
