@@ -28,7 +28,7 @@ export class ContactsEditorComponent implements OnInit {
   ngOnInit() {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', validateEmail, checkEmailAvailability(this.contactsService)],
+      email: ['', validateEmail],
       phone: '',
       birthday: '',
       website: '',
@@ -44,7 +44,11 @@ export class ContactsEditorComponent implements OnInit {
         .map(data => data['contact'])
         .subscribe(contact => {
           this.contact = contact;
+          // We need to add the async validator when the contact is loaded,
+          // because it needs the contact's email address.
+          this.form.get('email').setAsyncValidators(checkEmailAvailability(this.contactsService, this.contact.email));
           this.form.patchValue(contact);
+
           this.eventBusService.emit('appTitleChange', `Editing: ${contact.name}`);
         });
   }

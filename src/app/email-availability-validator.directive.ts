@@ -1,17 +1,24 @@
 import { Directive, forwardRef } from '@angular/core';
 import { FormControl, NG_ASYNC_VALIDATORS } from '@angular/forms';
+import { Observable } from 'rxjs/Observable';
 import { ContactsService } from './contacts.service';
 
-export function checkEmailAvailability(contactsService: ContactsService) {
+import 'rxjs/add/observable/of';
+
+export function checkEmailAvailability(contactsService: ContactsService, allowedEmail?: string) {
   return (c: FormControl) => {
-    return contactsService.isEmailAvailable(c.value)
-      // Async validators emit either `null` when valid
-      // or an object which provides additional information
-      // about the error. Additionally, we could provide
-      // information about which contact uses this email address.
-                          .map(response => !response.error ? null : {
-                            emailTaken: true
-                          });
+    if (allowedEmail && c.value === allowedEmail) {
+      return Observable.of(null);
+    } else {
+      return contactsService.isEmailAvailable(c.value)
+        // Async validators emit either `null` when valid
+        // or an object which provides additional information
+        // about the error. Additionally, we could provide
+        // information about which contact uses this email address.
+                            .map(response => !response.error ? null : {
+                              emailTaken: true
+                            });
+    }
   };
 }
 
