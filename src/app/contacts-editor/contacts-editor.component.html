@@ -50,7 +50,7 @@
         </trm-tabs>
       </md-card-content>
       <md-card-actions fxLayout fxLayoutAlign="center center">
-        <button md-button type="submit" title="Save contact">Save</button>
+        <button md-button type="submit" [disabled]="!form.valid" title="Save contact">Save</button>
         <button md-button type="button" (click)="cancel(contact)" title="Cancel editing">Cancel</button>
       </md-card-actions>
     </md-card>
