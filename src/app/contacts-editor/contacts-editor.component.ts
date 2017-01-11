@@ -19,6 +19,7 @@ export class ContactsEditorComponent implements OnInit {
   form: FormGroup;
   warnOnClosing = true;
   modelHasChanged = false;
+  notifyContactUpdated = false;
 
   constructor(private contactsService: ContactsService,
               private eventBusService: EventBusService,
@@ -55,6 +56,9 @@ export class ContactsEditorComponent implements OnInit {
 
     this.form.valueChanges.subscribe((value) => {
       this.modelHasChanged = true;
+      // We currently render `contact.name` in contacts-list.
+      // To make this change visible we need to notify the component.
+      this.notifyContactUpdated = value.name !== this.contact.name;
     });
   }
 
@@ -68,8 +72,14 @@ export class ContactsEditorComponent implements OnInit {
     // via form interactions. This is because the object reference isn't automatically
     // updated via `FormControl`s.
     Object.assign(this.contact, contact)
-    this.contactsService.updateContact(this.contact)
-                       .subscribe(() => this.goToDetails());
+    this.contactsService
+        .updateContact(this.contact)
+        .subscribe(() => {
+          if (this.notifyContactUpdated) {
+            this.eventBusService.emit('contactUpdated', null);
+          }
+          this.goToDetails();
+        });
   }
 
   private goToDetails() {

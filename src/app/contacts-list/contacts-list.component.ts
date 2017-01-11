@@ -25,9 +25,13 @@ export class ContactsListComponent implements OnInit {
 
     this.eventBusService.emit('appTitleChange', 'Contacts');
 
-    this.eventBusService.observe('contactAdded').subscribe(() => {
-      this.contacts = this.contacts.merge(this.contactsService.getContacts());
-    });
+    this.eventBusService
+        .observe('contactAdded')
+        .merge(this.eventBusService.observe('contactUpdated'))
+        .subscribe(() => {
+          // We merge the fetch call so we keep the search stream
+          this.contacts = this.contacts.merge(this.contactsService.getContacts());
+        });
   }
 
   trackByContactId(index, contact) {
