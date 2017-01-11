@@ -25,6 +25,7 @@ export class ContactsCreatorComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.eventBusService.emit('appTitleChange', 'Create Contact');
     this.form = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', validateEmail, checkEmailAvailability(this.contactsService)],
