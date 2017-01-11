@@ -18,6 +18,7 @@ export class ContactsEditorComponent implements OnInit {
   contact: Contact;
   form: FormGroup;
   warnOnClosing = true;
+  modelHasChanged = false;
 
   constructor(private contactsService: ContactsService,
               private eventBusService: EventBusService,
@@ -51,6 +52,10 @@ export class ContactsEditorComponent implements OnInit {
 
           this.eventBusService.emit('appTitleChange', `Editing: ${contact.name}`);
         });
+
+    this.form.valueChanges.subscribe((value) => {
+      this.modelHasChanged = true;
+    });
   }
 
   cancel() {

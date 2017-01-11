@@ -15,7 +15,7 @@ export class CanDeactivateContactsEditorGuard implements CanDeactivate<ContactsE
   constructor(public dialog: MdDialog) {}
 
   canDeactivate(component: ContactsEditorComponent) {
-    if (component.warnOnClosing) {
+    if (component.warnOnClosing && component.modelHasChanged) {
       this.dialogRef = this.dialog.open(ConfirmDeactivationDialogComponent, {
         disableClose: false
       });
