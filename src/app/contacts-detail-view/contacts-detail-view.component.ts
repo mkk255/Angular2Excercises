@@ -11,7 +11,7 @@ import 'rxjs/add/operator/map';
   template: `
     <trm-contacts-detail [contact]="contact"
                     (edit)="navigateToEditor($event)"
-                    (back)="navigateToList()">
+                    [showBackButton]="false">
     </trm-contacts-detail>
   `,
   styleUrls: ['./contacts-detail-view.component.css']

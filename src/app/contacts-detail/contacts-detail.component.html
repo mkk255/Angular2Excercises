@@ -23,7 +23,7 @@
     </md-card-content>
     <md-card-actions fxLayout fxLayoutAlign="center center">
       <button md-button type="button" (click)="edit.emit(contact)">Edit</button>
-      <button md-button type="button" (click)="back.emit()">Go Back</button>
+      <button md-button *ngIf="showBackButton" type="button" (click)="back.emit()">Go Back</button>
     </md-card-actions>
   </md-card>
 </div>

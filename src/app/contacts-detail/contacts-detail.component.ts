@@ -8,6 +8,7 @@ import { Contact } from '../models/contact';
 })
 export class ContactsDetailComponent {
   @Input() contact: Contact;
+  @Input() showBackButton = true;
   @Output() back = new EventEmitter<void>();
   @Output() edit = new EventEmitter<Contact>();
 }
