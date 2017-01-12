@@ -6,36 +6,40 @@
       <md-card-subtitle>{{contact?.email || 'No email address'}}</md-card-subtitle>
     </md-card-title-group>
     <md-card-content>
-      <trm-tabs>
-        <trm-tab title="General" fxLayout="column">
-          <md-input-container fxFlex>
-            <input mdInput placeholder="Name" name="name" [value]="contact?.name" readonly>
-          </md-input-container>
-          <md-input-container fxFlex>
-            <input mdInput placeholder="Email" name="email" [value]="contact?.email" readonly>
-          </md-input-container>
-          <md-input-container fxFlex>
-            <input mdInput placeholder="Phone" name="phone" [value]="contact?.phone" readonly>
-          </md-input-container>
-          <md-input-container fxFlex>
-            <input mdInput placeholder="Website" name="website" [value]="contact?.website" readonly>
-          </md-input-container>
-          <md-input-container fxFlex>
-            <input mdInput placeholder="Birthday" name="birthday" type="date" [value]="contact?.birthday" readonly>
-          </md-input-container>
-        </trm-tab>
-        <trm-tab title="Address" fxLayout="column">
-          <md-input-container fxFlex>
-            <input mdInput placeholder="Street" name="street" [value]="contact?.address.street" readonly>
-          </md-input-container>
-          <md-input-container fxFlex>
-            <input mdInput placeholder="Zip" name="zip" [value]="contact?.address.zip" readonly>
-          </md-input-container>
-          <md-input-container fxFlex>
-            <input mdInput placeholder="City" name="city" [value]="contact?.address.city" readonly>
-          </md-input-container>
-        </trm-tab>
-      </trm-tabs>
+      <md-tab-group>
+        <md-tab label="General">
+          <div fxLayout="column">
+            <md-input-container fxFlex>
+              <input mdInput placeholder="Name" name="name" [value]="contact?.name" readonly>
+            </md-input-container>
+            <md-input-container fxFlex>
+              <input mdInput placeholder="Email" name="email" [value]="contact?.email" readonly>
+            </md-input-container>
+            <md-input-container fxFlex>
+              <input mdInput placeholder="Phone" name="phone" [value]="contact?.phone" readonly>
+            </md-input-container>
+            <md-input-container fxFlex>
+              <input mdInput placeholder="Website" name="website" [value]="contact?.website" readonly>
+            </md-input-container>
+            <md-input-container fxFlex>
+              <input mdInput placeholder="Birthday" name="birthday" type="date" [value]="contact?.birthday" readonly>
+            </md-input-container>
+          </div>
+        </md-tab>
+        <md-tab label="Address">
+          <div fxLayout="column">
+            <md-input-container fxFlex>
+              <input mdInput placeholder="Street" name="street" [value]="contact?.address.street" readonly>
+            </md-input-container>
+            <md-input-container fxFlex>
+              <input mdInput placeholder="Zip" name="zip" [value]="contact?.address.zip" readonly>
+            </md-input-container>
+            <md-input-container fxFlex>
+              <input mdInput placeholder="City" name="city" [value]="contact?.address.city" readonly>
+            </md-input-container>
+          </div>
+        </md-tab>
+      </md-tab-group>
     </md-card-content>
     <md-card-actions fxLayout fxLayoutAlign="center center">
       <button md-button type="button" (click)="edit.emit(contact)">Edit</button>
