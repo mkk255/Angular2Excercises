@@ -7,35 +7,36 @@
         <md-card-subtitle>{{form.get('email').value || 'No email address'}}</md-card-subtitle>
       </md-card-title-group>
       <md-card-content>
-        <trm-tabs>
-          <trm-tab title="General" fxLayout="column">
-            <md-input-container fxFlex [dividerColor]="form.get('name').errors ? 'warn' : 'primary'">
-              <input md-input placeholder="Name" formControlName="name">
-              <md-hint align="end" *ngIf="!form.get('name').valid && !form.get('name').pristine">
-                <template [ngIf]="form.get('name').hasError('required')">This field is required</template>
-                <template [ngIf]="form.get('name').hasError('minlength')">A name must have at least {{form.get('name').errors.minlength.requiredLength}} characters</template>
-              </md-hint>
-            </md-input-container>
-            <md-input-container fxFlex [dividerColor]="form.get('email').errors ? 'warn' : 'primary'">
-              <input md-input placeholder="Email" formControlName="email">
-              <md-hint align="end" *ngIf="!form.get('email').valid && !form.get('email').pristine">
-                <template [ngIf]="form.get('email').hasError('validateEmail')">Please enter a valid email address</template>
-                <template [ngIf]="form.get('email').hasError('emailTaken')">This email address is already taken</template>
-              </md-hint>
-            </md-input-container>
-            <md-input-container fxFlex>
-              <input md-input placeholder="Birthday" formControlName="birthday" type="date">
-            </md-input-container>
-            <md-input-container fxFlex>
-              <input md-input placeholder="Phone" formControlName="phone">
-            </md-input-container>
-            <md-input-container fxFlex>
-              <input md-input placeholder="Website" formControlName="website">
-            </md-input-container>
-          </trm-tab>
-          <trm-tab title="Address">
-            <fieldset fxLayout="column" formGroupName="address">
-              <legend>Address</legend>
+        <md-tab-group>
+          <md-tab label="General">
+            <div fxLayout="column">
+              <md-input-container fxFlex [dividerColor]="form.get('name').errors ? 'warn' : 'primary'">
+                <input md-input placeholder="Name" formControlName="name">
+                <md-hint align="end" *ngIf="!form.get('name').valid && !form.get('name').pristine">
+                  <template [ngIf]="form.get('name').hasError('required')">This field is required</template>
+                  <template [ngIf]="form.get('name').hasError('minlength')">A name must have at least {{form.get('name').errors.minlength.requiredLength}} characters</template>
+                </md-hint>
+              </md-input-container>
+              <md-input-container fxFlex [dividerColor]="form.get('email').errors ? 'warn' : 'primary'">
+                <input md-input placeholder="Email" formControlName="email">
+                <md-hint align="end" *ngIf="!form.get('email').valid && !form.get('email').pristine">
+                  <template [ngIf]="form.get('email').hasError('validateEmail')">Please enter a valid email address</template>
+                  <template [ngIf]="form.get('email').hasError('emailTaken')">This email address is already taken</template>
+                </md-hint>
+              </md-input-container>
+              <md-input-container fxFlex>
+                <input md-input placeholder="Birthday" formControlName="birthday" type="date">
+              </md-input-container>
+              <md-input-container fxFlex>
+                <input md-input placeholder="Phone" formControlName="phone">
+              </md-input-container>
+              <md-input-container fxFlex>
+                <input md-input placeholder="Website" formControlName="website">
+              </md-input-container>
+            </div>
+          </md-tab>
+          <md-tab label="Address">
+            <div fxLayout="column" formGroupName="address">
               <md-input-container fxFlex>
                 <input md-input placeholder="Street" formControlName="street">
               </md-input-container>
@@ -45,9 +46,9 @@
               <md-input-container fxFlex>
                 <input md-input placeholder="City" formControlName="city">
               </md-input-container>
-            </fieldset>
-          </trm-tab>
-        </trm-tabs>
+            </div>
+          </md-tab>
+        </md-tab-group>
       </md-card-content>
       <md-card-actions fxLayout fxLayoutAlign="center center">
         <button md-button type="submit" [disabled]="!form.valid" title="Save contact">Save</button>
