@@ -12,6 +12,9 @@ import { EventBusService } from './event-bus.service';
       </div>
     </md-toolbar>
     <router-outlet></router-outlet>
+    <a md-fab routerLink="/contact/new" title="Add a new contact" class="trm-floating-button">
+      <md-icon class="md-24">add</md-icon>
+    </a>
   `,
   styleUrls: ['./contacts.component.scss']
 })
