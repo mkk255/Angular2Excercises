@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
 import { Contact } from '../models/contact';
 import { EventBusService } from '../event-bus.service';
 import { ContactsService } from '../contacts.service';
@@ -15,12 +15,12 @@ import 'rxjs/add/operator/merge';
 export class ContactsListComponent implements OnInit {
 
   contacts: Observable<Array<Contact>>;
-  private terms$ = new Subject<string>();
+  private terms$ = new FormControl();
 
   constructor(private contactsService: ContactsService, private eventBusService: EventBusService) {}
 
   ngOnInit () {
-    this.contacts = this.contactsService.search(this.terms$)
+    this.contacts = this.contactsService.search(this.terms$.valueChanges)
                                         .merge(this.contactsService.getContacts());
 
     this.eventBusService.emit('appTitleChange', 'Contacts');
