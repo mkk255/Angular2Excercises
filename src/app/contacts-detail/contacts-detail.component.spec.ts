@@ -17,7 +17,7 @@ describe('ContactsDetailComponent', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports : [MaterialModule],
-        declarations: [ContactsDetailComponent],
+        declarations: [ContactsDetailComponent]
       });
 
       fixture = TestBed.createComponent(ContactsDetailComponent);

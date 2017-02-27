@@ -1,9 +1,8 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { MaterialModule } from '@angular/material';
 import { HttpModule } from '@angular/http';
-import { RouterTestingModule } from '@angular/router/testing';
 import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/observable/of';
@@ -25,11 +24,8 @@ describe('ContactsListComponent', () => {
         EventBusService,
         { provide: API_ENDPOINT, useValue: 'http://localhost:4201/api' }
       ],
-      imports: [
-        MaterialModule,
-        HttpModule,
-        RouterTestingModule
-      ]
+      imports: [HttpModule],
+      schemas: [NO_ERRORS_SCHEMA]
     });
 
     fixture = TestBed.createComponent(ContactsListComponent);
