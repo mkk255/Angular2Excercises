@@ -1,8 +1,7 @@
 import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 
-import { DebugElement } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { MaterialModule } from '@angular/material';
 
 import { ContactsDetailComponent } from './contacts-detail.component';
 import { Contact } from '../models/contact';
@@ -15,7 +14,7 @@ describe('ContactsDetailComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ContactsDetailComponent],
-      imports: [MaterialModule]
+      schemas: [NO_ERRORS_SCHEMA]
     });
 
     fixture = TestBed.createComponent(ContactsDetailComponent);
