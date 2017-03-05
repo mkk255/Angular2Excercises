@@ -1,6 +1,7 @@
-import {NO_ERRORS_SCHEMA, Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {TestBed, ComponentFixture} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
+import {MaterialModule} from '@angular/material';
 
 import {Contact} from '../models/contact';
 import {ContactsDetailComponent} from './contacts-detail.component';
@@ -15,11 +16,8 @@ describe('ContactsDetailComponent', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
+        imports : [MaterialModule],
         declarations: [ContactsDetailComponent],
-
-        // Use this because we are not loading the Material components
-        // and not running the mdCard nor the mdInput Directive(s)
-        schemas: [NO_ERRORS_SCHEMA]
       });
 
       fixture = TestBed.createComponent(ContactsDetailComponent);
@@ -96,8 +94,8 @@ describe('ContactsDetailComponent', () => {
 
     beforeEach(() => {
       TestBed.configureTestingModule({
-        declarations: [TestContactDetailsComponent, ContactsDetailComponent],
-        schemas: [NO_ERRORS_SCHEMA]
+        imports : [MaterialModule],
+        declarations: [TestContactDetailsComponent, ContactsDetailComponent]
       });
     });
 
