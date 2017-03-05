@@ -120,6 +120,8 @@ export const customMatchers: jasmine.CustomMatcherFactories = {
   toHaveMap : function() {
     return {
       compare: function (actual: {[k: string]: string}, map: {[k: string]: string}) {
+        if (actual['nativeElement']) actual = actual['nativeElement'];
+
         let allPassed: boolean;
         allPassed = Object.keys(map).length !== 0;
         Object.keys(map).forEach(key => {

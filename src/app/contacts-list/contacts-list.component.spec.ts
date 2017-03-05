@@ -14,11 +14,16 @@ import {API_ENDPOINT} from '../app.tokens';
 import {createFixture, queryFor} from '../utils/testing/helpers';
 import {DebugElement} from '@angular/core';
 
+// Load Custom Jasmine Matchers
+import {customMatchers, expect} from '../utils/testing/custom-matchers';
+
 describe('ContactsListComponent', () => {
   let contactsService: ContactsService;
   let interceptAPI;
 
   beforeEach(() => {
+    jasmine.addMatchers(customMatchers);
+
     TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       imports: [HttpModule],
@@ -40,20 +45,44 @@ describe('ContactsListComponent', () => {
     contactsService = _contactsService;
   }));
 
+  /**
+   *  Each contact is rendered as an md-list-item with the following html:
+   *  <a md-list-item
+   *      <img md-list-avatar
+   *           [src]="contact.image"
+   *           alt="Picture of {{contact.name}}" class="circle">
+   *      <h3 md-line>{{contact.name}}</h3>
+   *  </a>
+   *  Let's confirm the values are assigned properly for each list item
+   */
   it('should fetch and display contacts', () => {
-    interceptAPI('getContacts').respondWith([
+    let data;
+    interceptAPI('getContacts').respondWith(data = [
       {id: 0, name: 'First contact', image: '/assets/images/1.jpg'},
       {id: 1, name: 'Second contact', image: '/assets/images/2.jpg'}
     ]);
 
+    let items: DebugElement[];
     let fixture = createFixture(ContactsListComponent);
-    let items: DebugElement[] = queryFor(fixture, 'h3');
 
+    // ContactsListComponent::ngOnInit() internally calls `ContactsService::getContacts()`
     expect(contactsService.getContacts).toHaveBeenCalled();
-    expect(items.length).toEqual(2);
 
-    // These will fail, use DevTools to debug and find out why
-    expect(items[0].textContent).toEqual('First contact');
-    expect(items[1].textContent).toEqual('Second contact');
+    // Get all <h3> for each row item
+    items = queryFor(fixture, 'h3');
+    expect(items.length).toEqual(2);
+    items.forEach((item,j) => {
+      expect(item).toHaveText(`${data[j].name}`)
+    });
+
+    // Get all <img> for each row item
+    items = queryFor(fixture, 'img');
+    items.forEach((item,j) => {
+      expect(item).toHaveMap({
+        src : `http://localhost:9876${data[j].image}`,  // url root is Karma context
+        alt : `Picture of ${data[j].name}`
+      });
+    });
+
   });
 });
