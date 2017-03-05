@@ -1,72 +1,70 @@
-import { TestBed, ComponentFixure, inject, fakeAsync, tick } from '@angular/core/testing';
-import { HttpModule } from '@angular/http';
+import {TestBed, inject, fakeAsync, tick, ComponentFixture } from '@angular/core/testing';
+import {HttpModule} from '@angular/http';
 
-import { Observable } from 'rxjs/Observable';
+import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
 
-import { NO_ERRORS_SCHEMA, Component } from '@angular/core';
-import { Location } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Contact } from '../models/contact';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
+import {Location} from '@angular/common';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Contact} from '../models/contact';
 
-import { ContactsDetailViewComponent } from './contacts-detail-view.component';
-import { ContactsService } from '../contacts.service';
-import { EventBusService } from '../event-bus.service';
-import { API_ENDPOINT } from '../app.tokens';
+import {ContactsDetailViewComponent} from './contacts-detail-view.component';
+import {ContactsService} from '../contacts.service';
+import {EventBusService} from '../event-bus.service';
+import {API_ENDPOINT} from '../app.tokens';
 
+// ************************************************************************
+
+/**
+ * Router mock with a single stub method that will be used by `spyOn()`
+ * Simulate ActivateRoute with a snapshot stub also.
+ */
 class RouterStub {
-  navigate(urlSegments) {}
+  navigate(urlSegments) {
+  }
 }
+const activatedRouteStub = {
+  snapshot: {
+    params: {id: '0'},
+  }
+};
+
+// ************************************************************************
 
 describe('ContactsDetailViewComponent', () => {
 
-  let fixture: ComponentFixture<ContactsDetailViewComponent>;
-  let component: ContactsDetailViewComponent;
-  let contactsService: ContactsService;
+  let expectedContact: Contact = {  id: '0',  name: 'Pascal Precht', email: 'foo@bar.com' };
+  let createComponent = () => {
+    let fixture = TestBed.createComponent(ContactsDetailViewComponent);
+    let component = fixture.componentInstance;
+    let contactsService = fixture.debugElement.injector.get(ContactsService);
 
-  let expectedContact: Contact = {
-    id: '0',
-    name: 'Pascal Precht',
-    email: 'foo@bar.com'
-  };
+    spyOn(contactsService, 'getContact').and.returnValue(Observable.of(expectedContact));
 
-  let activatedRouteStub = {
-    snapshot: {
-      params: { id: '0' },
-    }
+    return { fixture, component, contactsService };
   };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      schemas: [NO_ERRORS_SCHEMA],
+      imports: [HttpModule],
       declarations: [ContactsDetailViewComponent],
       providers: [
-        ContactsService,
-        EventBusService,
-        {
-          provide: ActivatedRoute,
-          useValue: activatedRouteStub
-        },
-        {
-          provide: Router,
-          useClass: RouterStub
-        },
-        { provide: API_ENDPOINT, useValue: 'http://localhost:4201' }
+        ContactsService, EventBusService,
+        {provide: ActivatedRoute, useValue: activatedRouteStub},
+        {provide: Router, useClass: RouterStub},
+        {provide: API_ENDPOINT, useValue: 'http://localhost:4201'}
       ],
-      imports: [
-        HttpModule
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
     });
 
-    fixture = TestBed.createComponent(ContactsDetailViewComponent);
-    component = fixture.componentInstance;
-
-    contactsService = fixture.debugElement.injector.get(ContactsService);
-    spyOn(contactsService, 'getContact').and.returnValue(Observable.of(expectedContact));
   });
 
   it('should fetch contact by given route param', () => {
+    let { fixture, component, contactsService } = createComponent();
+
     fixture.detectChanges();
+
     expect(contactsService.getContact).toHaveBeenCalled();
     expect(contactsService.getContact).toHaveBeenCalledWith('0');
     expect(component.contact).toEqual(expectedContact);
@@ -74,35 +72,52 @@ describe('ContactsDetailViewComponent', () => {
 
   it('should emit appTitleChange event with contact name', inject([EventBusService], (eventBusService) => {
     spyOn(eventBusService, 'emit');
+
+    let { fixture } = createComponent();
     fixture.detectChanges();
+
     expect(eventBusService.emit).toHaveBeenCalledWith('appTitleChange', expectedContact.name);
   }));
 
-  it('should navigate to list', inject([Router], (router) => {
-    spyOn(router, 'navigate');
-    component.navigateToList();
-    expect(router.navigate).toHaveBeenCalledWith(['/']);
-  }));
+  describe('Router navigation', ()=>{
 
-  it('should navigate to editor route with correct params', inject([Router], (router) => {
-    spyOn(router, 'navigate');
-    component.navigateToEditor(expectedContact);
-    expect(router.navigate).toHaveBeenCalledWith(['/contact', expectedContact.id, 'edit']);
-  }));
+    it('should navigate to list', inject([Router], (router) => {
+      let { component } = createComponent();
+      spyOn(router, 'navigate');
 
-  xit('should navigate to list (test location path)', fakeAsync(inject([Router, Location], (router, location) => {
-    spyOn(router, 'navigate');
-    component.navigateToList();
-    expect(router.navigate).toHaveBeenCalledWith(['/']);
-    tick();
-    expect(location.path()).toEqual('/');
-  })));
+      component.navigateToList();
+      expect(router.navigate).toHaveBeenCalledWith(['/']);
+    }));
 
-  xit('should navigate to editor route with correct params (test location path)', fakeAsync(inject([Router, Location], (router, location) => {
-    spyOn(router, 'navigate');
-    component.navigateToEditor(expectedContact);
-    expect(router.navigate).toHaveBeenCalledWith(['/contact', expectedContact.id, 'edit']);
-    tick();
-    expect(location.path()).toEqual('/contact/0/edit');
-  })));
+    it('should navigate to editor route with correct params', inject([Router], (router) => {
+      let { component } = createComponent();
+      spyOn(router, 'navigate');
+
+      component.navigateToEditor(expectedContact);
+      expect(router.navigate).toHaveBeenCalledWith(['/contact', expectedContact.id, 'edit']);
+    }));
+
+    xit('should navigate to list (test location path)', fakeAsync(inject([Router, Location], (router, location) => {
+      let { component } = createComponent();
+      spyOn(router, 'navigate');
+
+      component.navigateToList();
+      expect(router.navigate).toHaveBeenCalledWith(['/']);
+
+      tick();   // flush router async queue
+      expect(location.path()).toEqual('/');
+    })));
+
+    xit('should navigate to editor route with correct params (test location path)', fakeAsync(inject([Router, Location], (router, location) => {
+      let { component } = createComponent();
+      spyOn(router, 'navigate');
+
+      component.navigateToEditor(expectedContact);
+      expect(router.navigate).toHaveBeenCalledWith(['/contact', expectedContact.id, 'edit']);
+
+      tick();   // flush router async queue
+      expect(location.path()).toEqual('/contact/0/edit');
+    })));
+  });
+
 });
