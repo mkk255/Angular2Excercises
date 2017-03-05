@@ -15,11 +15,15 @@ import { ContactsService } from './contacts.service';
 
 import { CONTACT_DATA } from './data/contact-data';
 
-describe('ContactAppComponent Integration Specs', () => {
+/**
+ * Full testing of all components with interceptor to ContactsService
+ * and Router navigation
+ */
+describe('ContactAppComponent integration tests', () => {
 
   let router: Router;
   let location: Location;
-  let fixture: ComponentFixture<ContactsApp>;
+  let fixture: ComponentFixture<ContactsAppComponent>;
   let contactsService: ContactsService;
 
   beforeEach(() => {
@@ -33,12 +37,15 @@ describe('ContactAppComponent Integration Specs', () => {
     location = TestBed.get(Location);
     contactsService = TestBed.get(ContactsService);
     fixture = TestBed.createComponent(ContactsAppComponent);
+
+    /**
+     * Intercept ContactsService calls and return Observable mock data
+     */
+    spyOn(contactsService, 'getContacts').and.returnValue(Observable.of(CONTACT_DATA));
+    spyOn(contactsService, 'getContact').and.returnValue(Observable.of(CONTACT_DATA[0]));
   });
 
   it('should render list of contacts', fakeAsync(() => {
-
-    spyOn(contactsService, 'getContacts').and.returnValue(Observable.of(CONTACT_DATA));
-
     router.navigateByUrl('/');
 
     tick();
@@ -53,23 +60,17 @@ describe('ContactAppComponent Integration Specs', () => {
   }));
 
   it('should navigate to a contact detail view', fakeAsync(() => {
-
-    spyOn(contactsService, 'getContacts').and.returnValue(Observable.of(CONTACT_DATA));
-    spyOn(contactsService, 'getContact').and.returnValue(Observable.of(CONTACT_DATA[0]));
     router.navigateByUrl('/');
-
     tick();
     fixture.detectChanges();
 
     let viewItem = fixture.debugElement.queryAll(By.css('a'))[0];
     viewItem.nativeElement.click();
-
     tick();
     fixture.detectChanges();
 
-    expect(location.path()).toEqual('/contact/0');
-
     let de = fixture.debugElement.query(By.css('md-card-title'));
+    expect(location.path()).toEqual('/contact/0');
     expect(de.nativeElement.textContent).toContain(CONTACT_DATA[0].name);
   }));
 });
