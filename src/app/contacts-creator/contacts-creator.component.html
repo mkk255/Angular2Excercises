@@ -25,9 +25,17 @@
           <md-input-container fxFlex>
             <input mdInput placeholder="Birthday" formControlName="birthday" type="date">
           </md-input-container>
-          <md-input-container fxFlex>
-            <input mdInput placeholder="Phone" formControlName="phone">
-          </md-input-container>
+
+          <div formArrayName="phone">
+            <div *ngFor="let phone of form.get('phone').controls; let i = index; let l = last;">
+              <md-input-container>
+                <input mdInput placeholder="Phone" [formControlName]="i">
+              </md-input-container>
+              <button md-icon-button type="button" *ngIf="i >= 1" (click)="removePhoneField(i)"><md-icon>highlight_off</md-icon></button>
+              <button md-icon-button type="button" *ngIf="l && phone.value != ''" (click)="addPhoneField()"><md-icon>add_circle_outline</md-icon></button>
+            </div>
+          </div>
+
           <md-input-container fxFlex>
             <input mdInput placeholder="Website" formControlName="website">
           </md-input-container>
