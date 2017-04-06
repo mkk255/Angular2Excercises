@@ -1,0 +1,15 @@
+<fieldset [formGroup]="form" fxLayout="column">
+  <legend>Address</legend>
+  <md-input-container fxFlex>
+    <input mdInput placeholder="Street" (blur)="propagateTouch()" formControlName="street">
+  </md-input-container>
+  <md-input-container fxFlex>
+    <input mdInput placeholder="Zip" (blur)="propagateTouch()" formControlName="zip">
+  </md-input-container>
+  <md-input-container fxFlex>
+    <input mdInput placeholder="City" (blur)="propagateTouch()" formControlName="city">
+  </md-input-container>
+  <md-select placeholder="Country" (blur)="propagateTouch()" formControlName="country">
+    <md-option *ngFor="let country of countries" [value]="country.name">{{ country.name }}</md-option>
+  </md-select>
+</fieldset>

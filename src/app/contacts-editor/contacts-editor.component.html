@@ -43,21 +43,8 @@
               {{variant}}
             </md-radio-button>
           </md-radio-group>
-          <fieldset fxLayout="column" formGroupName="address">
-            <legend>Address</legend>
-            <md-input-container fxFlex>
-              <input mdInput placeholder="Street" formControlName="street">
-            </md-input-container>
-            <md-input-container fxFlex>
-              <input mdInput placeholder="Zip" formControlName="zip">
-            </md-input-container>
-            <md-input-container fxFlex>
-              <input mdInput placeholder="City" formControlName="city">
-            </md-input-container>
-            <md-select placeholder="Country" formControlName="country">
-              <md-option *ngFor="let country of countries" [value]="country.name">{{ country.name }}</md-option>
-            </md-select>
-          </fieldset>
+
+          <trm-address-input formControlName="address"></trm-address-input>
         </div>
       </md-card-content>
       <md-card-actions fxLayout fxLayoutAlign="center center">

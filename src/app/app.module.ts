@@ -12,6 +12,7 @@ import { ContactsListComponent } from './contacts-list/contacts-list.component';
 import { ContactsDetailComponent } from './contacts-detail/contacts-detail.component';
 import { ContactsEditorComponent } from './contacts-editor/contacts-editor.component';
 import { ContactsCreatorComponent } from './contacts-creator/contacts-creator.component';
+import { AddressInputComponent } from './address-input/address-input.component';
 
 import { EmailValidatorDirective } from './email-validator.directive';
 import { EmailAvailabilityValidatorDirective } from './email-availability-validator.directive';
@@ -29,7 +30,8 @@ import { API_ENDPOINT } from './app.tokens';
     ContactsEditorComponent,
     ContactsCreatorComponent,
     EmailValidatorDirective,
-    EmailAvailabilityValidatorDirective
+    EmailAvailabilityValidatorDirective,
+    AddressInputComponent
   ],
   imports: [
     BrowserModule,
