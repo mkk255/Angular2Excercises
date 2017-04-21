@@ -6,6 +6,7 @@ import { ContactsService } from '../contacts.service';
 import { Contact } from '../models/contact';
 
 import { ApplicationState } from '../state-management';
+import { ContactsQuery } from '../state-management/contacts/contacts.reducer';
 
 @Component({
   selector: 'trm-contacts-detail',
@@ -18,10 +19,6 @@ export class ContactsDetailComponent implements OnInit {
   constructor(private store: Store<ApplicationState>) { }
 
   ngOnInit() {
-    this.contact$ = this.store.select(state => {
-      let id = state.contacts.selectedContactId;
-
-      return state.contacts.list.find(contact => contact.id == id);
-    });
+    this.contact$ = this.store.select(ContactsQuery.getSelectedContact);
   }
 }
