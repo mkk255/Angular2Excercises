@@ -14,10 +14,16 @@ import { Contact } from '../../models/contact';
  * required to mark the type property as `readonly` on the action class.
  */
 export namespace ContactsActionTypes {
+  export const LOAD_CONTACTS = '[Contacts] Load Contacts';
   export const LOAD_CONTACTS_SUCCESS = '[Contacts] Load Contacts Success';
   export const ADD_CONTACT = '[Contacts] Add Contact';
   export const UPDATE_CONTACT = '[Contacts] Update Contact';
+  export const SAVE_CONTACT = '[Contacts] Save Contact';
   export const SELECT_CONTACT = '[Contacts] Select Contact';
+}
+
+export class LoadContactsAction implements Action {
+  readonly type = ContactsActionTypes.LOAD_CONTACTS;
 }
 
 export class LoadContactsSuccessAction implements Action {
@@ -44,5 +50,11 @@ export class UpdateContactAction implements Action {
   constructor(public payload: Contact) { }
 }
 
-export type ContactsActions = LoadContactsSuccessAction | AddContactAction
-  | SelectContactAction | UpdateContactAction;
+export class SaveContactAction implements Action {
+  readonly type = ContactsActionTypes.SAVE_CONTACT;
+
+  constructor(public payload: Contact) { }
+}
+
+export type ContactsActions = LoadContactsAction | LoadContactsSuccessAction |
+  AddContactAction | SelectContactAction | UpdateContactAction | SaveContactAction;

@@ -4,11 +4,11 @@ import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 
 import { Contact } from '../models/contact';
-import { ContactsService } from '../contacts.service';
 
 import { ApplicationState } from '../state-management';
 import { UpdateContactAction } from '../state-management/contacts/contacts.actions';
 import { ContactsQuery } from '../state-management/contacts/contacts.reducer';
+import { SaveContactAction } from 'app/state-management/contacts/contacts.actions';
 
 @Component({
   selector: 'trm-contacts-editor',
@@ -19,9 +19,8 @@ export class ContactsEditorComponent implements OnInit {
 
   contact$: Observable<Contact>;
 
-  constructor(private contactsService: ContactsService,
-    private store: Store<ApplicationState>,
-    private router: Router) { }
+  constructor(private router: Router,
+    private store: Store<ApplicationState>) { }
 
   ngOnInit() {
     this.contact$ = this.store.select(ContactsQuery.getSelectedContact);
@@ -32,12 +31,7 @@ export class ContactsEditorComponent implements OnInit {
   }
 
   save(contact: Contact) {
-    this.contactsService
-      .updateContact(contact)
-      .subscribe(() => {
-        this.store.dispatch(new UpdateContactAction(contact));
-        this.goToDetails(contact);
-      });
+    this.store.dispatch(new SaveContactAction(contact));
   }
 
   private goToDetails(contact: Contact) {

@@ -11,6 +11,7 @@ import { compose } from '@ngrx/core/compose';
 import { storeFreeze } from 'ngrx-store-freeze';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
 
 import { ContactsAppComponent } from './app.component';
 import { ContactsListComponent } from './contacts-list/contacts-list.component';
@@ -24,6 +25,7 @@ import { APP_ROUTES } from './app.routes';
 import { API_ENDPOINT } from './app.tokens';
 
 import { ROOT_REDUCER } from './state-management';
+import { ContactsEffects } from './state-management/contacts/contacts.effects';
 
 const MIDDLEWARE = !environment.production
   ? [storeFreeze, combineReducers]
@@ -52,6 +54,7 @@ export function getComposedReducer(state: any, action: any) {
     FlexLayoutModule,
     RouterModule.forRoot(APP_ROUTES),
     StoreModule.provideStore(getComposedReducer),
+    EffectsModule.run(ContactsEffects),
     StoreDevtoolsModule.instrumentOnlyWithExtension({
       maxAge: 5
     }),
