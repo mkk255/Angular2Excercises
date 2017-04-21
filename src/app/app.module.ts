@@ -6,6 +6,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
 
 import { ContactsAppComponent } from './app.component';
 import { ContactsListComponent } from './contacts-list/contacts-list.component';
@@ -16,6 +17,8 @@ import { ContactsService } from './contacts.service';
 
 import { APP_ROUTES } from './app.routes';
 import { API_ENDPOINT } from './app.tokens';
+
+import { ROOT_REDUCER } from './state-management';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,7 @@ import { API_ENDPOINT } from './app.tokens';
     MaterialModule,
     FlexLayoutModule,
     RouterModule.forRoot(APP_ROUTES),
+    StoreModule.provideStore(ROOT_REDUCER),
     HttpModule,
     FormsModule
   ],
