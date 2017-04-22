@@ -7,7 +7,9 @@ import { HttpModule } from '@angular/http';
 import { MaterialModule } from "@angular/material";
 import { FlexLayoutModule } from "@angular/flex-layout";
 
-import { APP_STORE_PROVIDER } from './store/app-store';
+import { APP_STORE_PROVIDER} from './store/app-store';
+import { VoterService} from './store/votes/voter.service';
+
 import { AppComponent } from "./app.component";
 import { DashboardComponent } from "./components/dashboard.component";
 import { VoterComponent } from "./components/voter.component";
@@ -28,7 +30,7 @@ import { StatusComponent } from "./components/status.component";
     VoterComponent,
     StatusComponent
   ],
-  providers: [APP_STORE_PROVIDER],
+  providers: [APP_STORE_PROVIDER, VoterService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
