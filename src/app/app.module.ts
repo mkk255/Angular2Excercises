@@ -14,6 +14,7 @@ import { ContactsDetailComponent } from './contacts-detail/contacts-detail.compo
 import { ContactsEditorComponent } from './contacts-editor/contacts-editor.component';
 
 import { ContactsService } from './contacts.service';
+import { ContactExistsGuard } from './contact-exists.guard';
 
 import { APP_ROUTES } from './app.routes';
 import { API_ENDPOINT } from './app.tokens';
@@ -39,7 +40,8 @@ import { ROOT_REDUCER } from './state-management';
   ],
   providers: [
     ContactsService,
-    { provide: API_ENDPOINT, useValue: 'http://localhost:4201/api' }
+    { provide: API_ENDPOINT, useValue: 'http://localhost:4201/api' },
+    ContactExistsGuard
   ],
   bootstrap: [ContactsAppComponent]
 })

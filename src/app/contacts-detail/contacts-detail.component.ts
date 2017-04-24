@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 
@@ -7,7 +6,6 @@ import { ContactsService } from '../contacts.service';
 import { Contact } from '../models/contact';
 
 import { ApplicationState } from '../state-management';
-import { SelectContactAction } from 'app/state-management/contacts/contacts.actions';
 
 @Component({
   selector: 'trm-contacts-detail',
@@ -17,12 +15,9 @@ import { SelectContactAction } from 'app/state-management/contacts/contacts.acti
 export class ContactsDetailComponent implements OnInit {
   contact$: Observable<Contact>;
 
-  constructor(private store: Store<ApplicationState>, private router: ActivatedRoute) { }
+  constructor(private store: Store<ApplicationState>) { }
 
   ngOnInit() {
-    let contactId = this.router.snapshot.paramMap.get('id');
-    this.store.dispatch(new SelectContactAction(+contactId));
-
     this.contact$ = this.store.select(state => {
       let id = state.contacts.selectedContactId;
 

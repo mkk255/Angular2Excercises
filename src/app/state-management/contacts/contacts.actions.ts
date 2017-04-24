@@ -15,6 +15,7 @@ import { Contact } from '../../models/contact';
  */
 export namespace ContactsActionTypes {
   export const LOAD_CONTACTS_SUCCESS = '[Contacts] Load Contacts Success';
+  export const ADD_CONTACT = '[Contacts] Add Contact';
   export const UPDATE_CONTACT = '[Contacts] Update Contact';
   export const SELECT_CONTACT = '[Contacts] Select Contact';
 }
@@ -31,11 +32,17 @@ export class SelectContactAction implements Action {
   constructor(public payload: number) { }
 }
 
+export class AddContactAction implements Action {
+  readonly type = ContactsActionTypes.ADD_CONTACT;
+
+  constructor(public payload: Contact) { }
+}
+
 export class UpdateContactAction implements Action {
   readonly type = ContactsActionTypes.UPDATE_CONTACT;
 
   constructor(public payload: Contact) { }
 }
 
-export type ContactsActions = LoadContactsSuccessAction
+export type ContactsActions = LoadContactsSuccessAction | AddContactAction
   | SelectContactAction | UpdateContactAction;

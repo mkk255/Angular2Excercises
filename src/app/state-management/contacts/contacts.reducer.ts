@@ -27,6 +27,14 @@ export function contactsReducer(state: ContactsState = INITAL_STATE, action: Con
         ...state,
         selectedContactId: action.payload
       }
+    case ContactsActionTypes.ADD_CONTACT:
+      let findInList = (found, contact) => found || contact.id == action.payload.id;
+      let inStore = state.list.reduce(findInList, false);
+
+      return {
+        ...state,
+        list: !inStore ? [...state.list, action.payload] : [...state.list]
+      }
     case ContactsActionTypes.UPDATE_CONTACT:
       let updatedList = state.list.map(contact => contact.id == action.payload.id
         ? { ...contact, ...action.payload } : contact);
