@@ -1,13 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';
 
 import { Contact } from '../models/contact';
 
-
-import { ApplicationState } from '../state-management';
-import { LoadContactsAction } from '../state-management/contacts/contacts.actions';
-import { ContactsQuery } from '../state-management/contacts/contacts.reducer';
+import { ContactsProxy } from '../state-management/contacts/contacts.proxy';
 
 @Component({
   selector: 'trm-contacts-list',
@@ -17,11 +13,10 @@ import { ContactsQuery } from '../state-management/contacts/contacts.reducer';
 export class ContactsListComponent implements OnInit {
   contacts$: Observable<Array<Contact>>;
 
-  constructor(private store: Store<ApplicationState>) { }
+  constructor(private contactsProxy: ContactsProxy) { }
 
   ngOnInit() {
-    this.contacts$ = this.store.select(ContactsQuery.getContacts);
-    this.store.dispatch(new LoadContactsAction());
+    this.contacts$ = this.contactsProxy.getContacts();
   }
 
   trackByContactId(index, contact) {
