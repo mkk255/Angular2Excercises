@@ -8,6 +8,8 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/merge';
+import 'rxjs/add/operator/delay';
+import 'rxjs/add/operator/takeUntil';
 
 @Component({
   selector: 'trm-contacts-list',
@@ -25,7 +27,7 @@ export class ContactsListComponent implements OnInit {
     this.contacts = this.terms$.debounceTime(400)
                                .distinctUntilChanged()
                                .switchMap(term => this.contactsService.search(term))
-                               .merge(this.contactsService.getContacts())
+                               .merge(this.contactsService.getContacts().delay(5000).takeUntil(this.terms$))
   }
 
   trackByContactId(index, contact) {
