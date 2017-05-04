@@ -3,11 +3,13 @@ import { Component, Inject } from '@angular/core';
 import { Store } from '../store/store';
 import { APP_STORE } from '../store/app-store';
 import { ApplicationState } from '../store/root.reducer';
+import {loadTotalVotesAction} from '../store/votes/vote-actions';
+import {VoterService} from '../store/votes/voter.service';
 
 @Component({
   selector: 'trm-status',
   template: `
-    {{ state.counter }}
+    {{ state?.counter }}
     <div class="tip">All Votes!</div>
   `,
   styles : [
@@ -16,19 +18,19 @@ import { ApplicationState } from '../store/root.reducer';
   ]
 })
 export class StatusComponent {
-
   state;
 
   /**
    * Inject the appStore here and listen
    * for vote changes!
    */
-  constructor(@Inject(APP_STORE) private store: Store<ApplicationState>) {
-    this.state = store.getState().votes;
+  constructor(
+        private voteStation: VoterService,
+        @Inject(APP_STORE) private store: Store<ApplicationState>) {
 
+    store.dispatch( loadTotalVotesAction(voteStation));
     store.subscribe(() => {
       this.state = store.getState().votes;
     })
   }
 }
-
